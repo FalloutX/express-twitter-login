@@ -9,7 +9,7 @@ import myRoutes from './routes/index'
 import config from './config'
 import User from './models/User'
 import authTwitter from './authTwitter'
-
+import bearerStrategy from './bearerStrategy'
 /**
  * configureApp - adds configuration and bootstraps express App.
  *
@@ -34,11 +34,12 @@ function configureApp () {
     secret: config.express.secret,
     maxAge: 3600 * 1000,
     resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    saveUninitialized: false
+    // store: new MongoStore({ mongooseConnection: mongoose.connection })
   }))
 
   passport.use(authTwitter)
+  passport.use(bearerStrategy)
   passport.serializeUser((user, cb) => {
     cb(null, user._id)
   })
