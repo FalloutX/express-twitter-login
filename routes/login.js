@@ -1,4 +1,5 @@
 import express from 'express'
+import config from '../config'
 import passport from 'passport'
 
 const router = express.Router()
@@ -27,7 +28,8 @@ router.get('/twitter/return',
     session: false
   }),
   (req, res) => {
-    res.redirect('/login/guess/user?access_token' + req.user.accessToken)
+    // Redirect to frontend server with the access token in the request
+    res.redirect(`${config.frontend.server}user?access_token=${req.user.accessToken}`)
   })
 
 
